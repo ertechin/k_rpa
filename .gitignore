@@ -1,0 +1,9 @@
+# macOS Finder metadata
+.DS_Store
+
+# for task management
+work_plan.md
+
+# Python 
+__pycache__/
+*.pyc
