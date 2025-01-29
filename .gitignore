@@ -7,3 +7,7 @@ work_plan.md
 # Python 
 __pycache__/
 *.pyc
+
+# Image Datasets
+needles/*.*
+haystacks/*.*

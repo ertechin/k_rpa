@@ -56,14 +56,13 @@ def get_screen_size():
 
 def show_main_screen_and_fps():
     """Live screen capturing with FPS display."""
-    # Ekran çözünürlüğünü al
     w, h = get_screen_size()
     print("mss Screen Capture Speed Test")
     print(f"Screen Resolution: {w}x{h}")
 
     t0 = time.time()
     n_frames = 0 
-    monitor = {"top": 0, "left": 0, "width": w/2, "height": h/2}  # Tüm ekran
+    monitor = {"top": 0, "left": 0, "width": w, "height": h}
 
     with mss.mss() as sct:
         try:
@@ -78,7 +77,7 @@ def show_main_screen_and_fps():
                 elapsed_time = time.time() - t0
                 n_frames += 1
                 avg_fps = n_frames / elapsed_time
-                print(f"\rAverage FPS: {avg_fps:.2f}", end="")  # Aynı satıra yaz
+                print(f"\rAverage FPS: {avg_fps:.2f}", end="")
 
                 key = cv.waitKey(1) & 0xFF
                 if key == ord('q'): 
