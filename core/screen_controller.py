@@ -53,38 +53,38 @@ def get_screen_size():
         height = monitor["height"]
     return width, height
 
+class ScreenController:
+    def capture_screen(self):
+        """Live screen capturing with FPS display."""
+        w, h = get_screen_size()
+        print("mss Screen Capture Speed Test")
+        print(f"Screen Resolution: {w}x{h}")
 
-def show_main_screen_and_fps():
-    """Live screen capturing with FPS display."""
-    w, h = get_screen_size()
-    print("mss Screen Capture Speed Test")
-    print(f"Screen Resolution: {w}x{h}")
+        t0 = time.time()
+        n_frames = 0 
+        monitor = {"top": 0, "left": 0, "width": w, "height": h}
 
-    t0 = time.time()
-    n_frames = 0 
-    monitor = {"top": 0, "left": 0, "width": w, "height": h}
+        with mss.mss() as sct:
+            try:
+                while True:
+                    img = sct.grab(monitor)
+                    img = np.array(img)
 
-    with mss.mss() as sct:
-        try:
-            while True:
-                img = sct.grab(monitor)
-                img = np.array(img)
+                    small = cv.resize(img, (0, 0), fx=0.5, fy=0.5)
 
-                small = cv.resize(img, (0, 0), fx=0.5, fy=0.5)
+                    cv.imshow("k_rpa", small)
 
-                cv.imshow("k_rpa", small)
+                    elapsed_time = time.time() - t0
+                    n_frames += 1
+                    avg_fps = n_frames / elapsed_time
+                    print(f"\rAverage FPS: {avg_fps:.2f}", end="")
 
-                elapsed_time = time.time() - t0
-                n_frames += 1
-                avg_fps = n_frames / elapsed_time
-                print(f"\rAverage FPS: {avg_fps:.2f}", end="")
-
-                key = cv.waitKey(1) & 0xFF
-                if key == ord('q'): 
-                    print("\nExiting...")
-                    break
-        except KeyboardInterrupt:
-            print("\nInterrupted by user (Ctrl+C)")
-        finally:
-            cv.destroyAllWindows()
+                    key = cv.waitKey(1) & 0xFF
+                    if key == ord('q'): 
+                        print("\nExiting...")
+                        break
+            except KeyboardInterrupt:
+                print("\nInterrupted by user (Ctrl+C)")
+            finally:
+                cv.destroyAllWindows()
 

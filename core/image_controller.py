@@ -1,3 +1,4 @@
+import os
 import cv2 as cv
 import numpy as np
 import time
@@ -78,3 +79,20 @@ def debug_and_check_multiple_image(haystacks, needle, method = 'multiple', cv_fu
         find_multiple_match(img, needle, debug_mode='rectangles')
         cv.destroyAllWindows()
 
+def some_method():
+    base_dir = os.path.dirname(os.path.abspath('main.py'))
+    haystacks_dir = os.path.join(base_dir, "haystacks")  
+    needles_dir = os.path.join(base_dir, "needles")
+
+    data_set = []
+    for file in os.listdir(haystacks_dir):
+        if file.endswith(('.png', '.jpg', '.jpeg')):  # Check if it's an image file
+            full_path = os.path.join(haystacks_dir, file)  # Create full path
+            data_set.append(full_path)  # Add to the list
+
+    needle_image = os.path.join(needles_dir, "ms.png")
+
+    debug_and_check_multiple_image(data_set, needle_image)
+
+class ImageController:
+    """ Image Controller """
